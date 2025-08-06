@@ -1,0 +1,70 @@
+<div class="h-screen bg-gray-50">
+  
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b border-gray-200">
+    <div class="px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <mat-icon class="text-blue-600 text-2xl">warehouse</mat-icon>
+          <h1 class="text-2xl font-bold text-gray-900">Warehouse Dashboard</h1>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <button 
+            mat-stroked-button 
+            (click)="refreshJobs()"
+            [disabled]="loading"
+            class="hover:bg-gray-50">
+            <mat-icon class="mr-2">refresh</mat-icon>
+            Refresh
+          </button>
+          
+          <div class="flex items-center space-x-2 text-sm text-gray-600">
+            <mat-icon class="text-green-500">circle</mat-icon>
+            <span>{{ jobs.length }} Jobs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content with Drawer -->
+  <mat-drawer-container class="h-full">
+    
+    <!-- Main Content Area -->
+    <mat-drawer-content class="p-6">
+      
+      <!-- Filter Section -->
+      <app-job-filter 
+        (filterChange)="onFilterChange($event)">
+      </app-job-filter>
+
+      <!-- Table Section -->
+      <app-job-table 
+        [jobs]="jobs"
+        [loading]="loading"
+        (jobSelected)="onJobSelected($event)">
+      </app-job-table>
+
+    </mat-drawer-content>
+
+    <!-- Sidebar Drawer -->
+    <mat-drawer 
+      #drawer 
+      mode="side" 
+      position="end" 
+      [opened]="sidebarOpen"
+      class="w-96 border-l border-gray-200">
+      
+      <app-job-detail-sidebar
+        [job]="selectedJob"
+        [loading]="loading"
+        (close)="onSidebarClose()"
+        (statusUpdate)="onStatusUpdate($event)">
+      </app-job-detail-sidebar>
+      
+    </mat-drawer>
+
+  </mat-drawer-container>
+
+</div> 

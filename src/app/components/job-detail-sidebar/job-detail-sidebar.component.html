@@ -1,0 +1,149 @@
+<div class="h-full bg-white shadow-lg flex flex-col">
+  
+  <!-- Header -->
+  <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+    <h2 class="text-xl font-semibold text-gray-800">Job Details</h2>
+    <button 
+      mat-icon-button 
+      (click)="onClose()"
+      class="hover:bg-gray-100">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex-1 flex items-center justify-center">
+    <div class="text-center">
+      <mat-spinner diameter="40" class="mx-auto mb-4"></mat-spinner>
+      <p class="text-gray-600">Loading job details...</p>
+    </div>
+  </div>
+
+  <!-- Job Details Content -->
+  <div *ngIf="!loading && job" class="flex-1 overflow-y-auto">
+    
+    <!-- Job Information -->
+    <div class="p-6 space-y-6">
+      
+      <!-- Basic Info -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-gray-900">Basic Information</h3>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Job ID</label>
+            <p class="text-sm text-gray-900 font-mono">{{ job.id }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">SKU</label>
+            <p class="text-sm text-gray-900 font-mono">{{ job.sku }}</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+          <span class="px-2 py-1 text-xs font-medium rounded-full" [ngClass]="getStatusColor(job.status)">
+            {{ job.status }}
+          </span>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Assigned User</label>
+          <p class="text-sm text-gray-900">{{ job.assignedUser }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Created Date</label>
+          <p class="text-sm text-gray-900">{{ formatDate(job.createdDate) }}</p>
+        </div>
+      </div>
+
+      <!-- Additional Details -->
+      <div *ngIf="job.description || job.priority || job.location" class="space-y-4">
+        <h3 class="text-lg font-medium text-gray-900">Additional Details</h3>
+        
+        <div *ngIf="job.description">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <p class="text-sm text-gray-900">{{ job.description }}</p>
+        </div>
+
+        <div *ngIf="job.priority" class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+            <span class="px-2 py-1 text-xs font-medium rounded-full" [ngClass]="getPriorityColor(job.priority)">
+              {{ job.priority }}
+            </span>
+          </div>
+          <div *ngIf="job.estimatedCompletion">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Est. Completion</label>
+            <p class="text-sm text-gray-900">{{ formatDate(job.estimatedCompletion) }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="job.location">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+          <p class="text-sm text-gray-900">{{ job.location }}</p>
+        </div>
+      </div>
+
+      <!-- Status Update Form -->
+      <div class="space-y-4 pt-6 border-t border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Update Status</h3>
+        
+        <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="space-y-4">
+          
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of jobStatuses" [value]="status">
+                {{ status }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="jobForm.get('status')?.hasError('required')">
+              Status is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Assigned User</mat-label>
+            <input matInput formControlName="assignedUser" placeholder="Enter user name">
+            <mat-error *ngIf="jobForm.get('assignedUser')?.hasError('required')">
+              Assigned user is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="flex space-x-3">
+            <button 
+              type="submit" 
+              mat-raised-button 
+              color="primary"
+              [disabled]="!jobForm.valid || updating"
+              class="flex-1">
+              <mat-spinner *ngIf="updating" diameter="20" class="mr-2"></mat-spinner>
+              <span>{{ updating ? 'Updating...' : 'Update Status' }}</span>
+            </button>
+            
+            <button 
+              type="button" 
+              mat-stroked-button 
+              (click)="onClose()"
+              [disabled]="updating">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !job" class="flex-1 flex items-center justify-center">
+    <div class="text-center">
+      <mat-icon class="text-gray-400 text-6xl mb-4">info</mat-icon>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">No job selected</h3>
+      <p class="text-gray-600">Select a job from the table to view details.</p>
+    </div>
+  </div>
+
+</div> 

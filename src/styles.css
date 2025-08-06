@@ -1,0 +1,27 @@
+/* Angular Material Theme - must come before Tailwind */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Custom utility classes */
+.mat-mdc-drawer-container {
+  height: 100vh;
+}
+
+.mat-mdc-table {
+  width: 100%;
+}
+
+/* Loading spinner styles */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}

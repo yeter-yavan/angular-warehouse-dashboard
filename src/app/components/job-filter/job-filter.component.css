@@ -1,0 +1,22 @@
+/* Component-specific styles */
+.mat-form-field {
+  width: 100%;
+}
+
+/* Custom date picker styling */
+.mat-datepicker-toggle {
+  color: #3b82f6;
+}
+
+/* Status badge colors */
+.status-pending {
+  color: #f59e0b;
+}
+
+.status-in-progress {
+  color: #3b82f6;
+}
+
+.status-completed {
+  color: #10b981;
+} 

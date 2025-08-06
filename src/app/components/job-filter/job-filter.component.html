@@ -1,0 +1,52 @@
+<div class="bg-white p-6 rounded-lg shadow-md mb-6">
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">Filter Jobs</h3>
+  
+  <form [formGroup]="filterForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    
+    <!-- Status Filter -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Job Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="">All Statuses</mat-option>
+        <mat-option *ngFor="let status of jobStatuses" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Start Date Filter -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="MM/DD/YYYY">
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- End Date Filter -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="MM/DD/YYYY">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Assigned User Filter -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Assigned User</mat-label>
+      <input matInput formControlName="assignedUser" placeholder="Search by user name">
+    </mat-form-field>
+
+  </form>
+
+  <!-- Clear Filters Button -->
+  <div class="flex justify-end mt-4">
+    <button 
+      mat-stroked-button 
+      color="warn" 
+      (click)="clearFilters()"
+      class="hover:bg-red-50">
+      <mat-icon class="mr-2">clear</mat-icon>
+      Clear Filters
+    </button>
+  </div>
+</div> 

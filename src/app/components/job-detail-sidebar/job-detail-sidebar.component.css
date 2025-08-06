@@ -1,0 +1,32 @@
+/* Sidebar specific styles */
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Custom scrollbar for the sidebar */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Form field spacing */
+.mat-mdc-form-field + .mat-mdc-form-field {
+  margin-top: 1rem;
+}
+
+/* Button group spacing */
+.flex.space-x-3 > * + * {
+  margin-left: 0.75rem;
+} 
