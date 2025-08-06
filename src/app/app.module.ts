@@ -29,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { JobFilterComponent } from './components/job-filter/job-filter.component';
 import { JobTableComponent } from './components/job-table/job-table.component';
+import { JobCardsComponent } from './components/job-cards/job-cards.component';
 import { JobDetailSidebarComponent } from './components/job-detail-sidebar/job-detail-sidebar.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { JobDetailSidebarComponent } from './components/job-detail-sidebar/job-d
     DashboardComponent,
     JobFilterComponent,
     JobTableComponent,
+    JobCardsComponent,
     JobDetailSidebarComponent
   ],
   imports: [

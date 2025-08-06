@@ -10,6 +10,30 @@
         </div>
         
         <div class="flex items-center space-x-3">
+          <!-- View Toggle -->
+          <div class="flex items-center bg-gray-100 rounded-lg p-1">
+            <button 
+              mat-stroked-button 
+              [class.bg-white]="viewMode === 'table'"
+              [class.shadow-sm]="viewMode === 'table'"
+              (click)="viewMode = 'table'"
+              class="rounded-md transition-all duration-200"
+              [disabled]="loading">
+              <mat-icon class="mr-2">table_chart</mat-icon>
+              Table
+            </button>
+            <button 
+              mat-stroked-button 
+              [class.bg-white]="viewMode === 'cards'"
+              [class.shadow-sm]="viewMode === 'cards'"
+              (click)="viewMode = 'cards'"
+              class="rounded-md transition-all duration-200"
+              [disabled]="loading">
+              <mat-icon class="mr-2">grid_view</mat-icon>
+              Cards
+            </button>
+          </div>
+
           <button 
             mat-stroked-button 
             (click)="refreshJobs()"
@@ -39,12 +63,23 @@
         (filterChange)="onFilterChange($event)">
       </app-job-filter>
 
-      <!-- Table Section -->
-      <app-job-table 
-        [jobs]="jobs"
-        [loading]="loading"
-        (jobSelected)="onJobSelected($event)">
-      </app-job-table>
+      <!-- Table View -->
+      <div *ngIf="viewMode === 'table'">
+        <app-job-table 
+          [jobs]="jobs"
+          [loading]="loading"
+          (jobSelected)="onJobSelected($event)">
+        </app-job-table>
+      </div>
+
+      <!-- Card View -->
+      <div *ngIf="viewMode === 'cards'">
+        <app-job-cards 
+          [jobs]="jobs"
+          [loading]="loading"
+          (jobSelected)="onJobSelected($event)">
+        </app-job-cards>
+      </div>
 
     </mat-drawer-content>
 

@@ -3,6 +3,8 @@ import { Subject, takeUntil, combineLatest } from 'rxjs';
 import { JobService } from '../../services/job.service';
 import { Job, JobFilter, JobStatus } from '../../models/job.model';
 
+export type ViewMode = 'table' | 'cards';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,6 +16,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loading = false;
   sidebarOpen = false;
   currentFilter: JobFilter = {};
+  viewMode: ViewMode = 'table';
 
   private destroy$ = new Subject<void>();
 
@@ -80,5 +83,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   refreshJobs(): void {
     this.jobService.refreshJobs();
+  }
+
+  toggleViewMode(): void {
+    this.viewMode = this.viewMode === 'table' ? 'cards' : 'table';
   }
 } 
