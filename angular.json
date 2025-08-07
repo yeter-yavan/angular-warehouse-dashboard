@@ -89,10 +89,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-warehouse-dashboard:build:production"
+              "buildTarget": "angular-warehouse-dashboard:build:production"
             },
             "development": {
-              "browserTarget": "angular-warehouse-dashboard:build:development"
+              "buildTarget": "angular-warehouse-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,7 +100,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-warehouse-dashboard:build"
+            "buildTarget": "angular-warehouse-dashboard:build"
           }
         },
         "test": {

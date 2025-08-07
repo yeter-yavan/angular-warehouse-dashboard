@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,8 +9,17 @@ import { Job } from '../../models/job.model';
   templateUrl: './job-table.component.html',
   styleUrls: ['./job-table.component.css']
 })
-export class JobTableComponent {
-  @Input() jobs: Job[] = [];
+export class JobTableComponent implements AfterViewInit, OnChanges {
+  private _jobs: Job[] = [];
+  @Input() set jobs(value: Job[]) {
+    this._jobs = value || [];
+    this.dataSource.data = this._jobs;
+    this.connectPaginator();
+  }
+  get jobs(): Job[] {
+    return this._jobs;
+  }
+
   @Input() loading = false;
   @Output() jobSelected = new EventEmitter<Job>();
 
@@ -20,18 +29,25 @@ export class JobTableComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  ngOnChanges(): void {
-    this.dataSource.data = this.jobs;
-    this.setupTable();
-  }
-
   ngAfterViewInit(): void {
-    this.setupTable();
+    this.connectPaginator();
   }
 
-  private setupTable(): void {
-    if (this.paginator && this.sort) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['jobs'] && !changes['jobs'].firstChange) {
+      this.connectPaginator();
+    }
+  }
+
+  private connectPaginator(): void {
+    if (this.paginator) {
       this.dataSource.paginator = this.paginator;
+      // Reset to first page when data changes
+      if (this.paginator.pageIndex > 0) {
+        this.paginator.firstPage();
+      }
+    }
+    if (this.sort) {
       this.dataSource.sort = this.sort;
     }
   }

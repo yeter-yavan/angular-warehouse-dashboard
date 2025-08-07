@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Job, JobStatus } from '../../models/job.model';
 
@@ -7,7 +7,7 @@ import { Job, JobStatus } from '../../models/job.model';
   templateUrl: './job-detail-sidebar.component.html',
   styleUrls: ['./job-detail-sidebar.component.css']
 })
-export class JobDetailSidebarComponent implements OnInit {
+export class JobDetailSidebarComponent implements OnInit, OnChanges {
   @Input() job: Job | null = null;
   @Input() loading = false;
   @Output() close = new EventEmitter<void>();
@@ -25,20 +25,23 @@ export class JobDetailSidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.job) {
-      this.jobForm.patchValue({
-        status: this.job.status,
-        assignedUser: this.job.assignedUser
-      });
+    this.updateForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['job'] && changes['job'].currentValue) {
+      this.updateForm();
     }
   }
 
-  ngOnChanges(): void {
+  private updateForm(): void {
     if (this.job) {
       this.jobForm.patchValue({
         status: this.job.status,
         assignedUser: this.job.assignedUser
       });
+    } else {
+      this.jobForm.reset();
     }
   }
 

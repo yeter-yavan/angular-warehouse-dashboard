@@ -42,6 +42,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.sidebarOpen = !!job;
     });
 
+    // Subscribe to current filter
+    this.jobService.currentFilter$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(filter => {
+      this.currentFilter = filter;
+    });
+
     // Load initial data
     this.loadJobs();
   }
@@ -52,7 +59,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   loadJobs(): void {
-    this.jobService.getJobs(this.currentFilter).subscribe();
+    this.jobService.getJobs(this.currentFilter).subscribe({
+      error: (error) => {
+        console.error('Error loading jobs:', error);
+      }
+    });
   }
 
   onFilterChange(filter: JobFilter): void {

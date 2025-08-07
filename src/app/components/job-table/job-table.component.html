@@ -2,7 +2,7 @@
   
   <!-- Loading State -->
   <div *ngIf="loading" class="loading-spinner p-8">
-    <mat-spinner diameter="40"></mat-spinner>
+    <mat-progress-spinner diameter="40"></mat-progress-spinner>
     <span class="ml-3 text-gray-600">Loading jobs...</span>
   </div>
 
@@ -99,7 +99,8 @@
     </div>
 
     <!-- Pagination -->
-    <mat-paginator 
+    <mat-paginator
+      [length]="jobs.length"
       [pageSizeOptions]="[5, 10, 25, 50]" 
       showFirstLastButtons 
       class="border-t border-gray-200">

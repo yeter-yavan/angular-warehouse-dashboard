@@ -1,9 +1,8 @@
 <div class="p-4">
   <form [formGroup]="filterForm">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-      
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-center justify-center">
       <!-- Status Filter -->
-      <mat-form-field appearance="outline" class="w-full">
+      <mat-form-field appearance="fill" class="w-full">
         <mat-label>Job Status</mat-label>
         <mat-select formControlName="status">
           <mat-option value="">All Statuses</mat-option>
@@ -12,31 +11,27 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
       <!-- Start Date Filter -->
-      <mat-form-field appearance="outline" class="w-full">
+      <mat-form-field appearance="fill" class="w-full">
         <mat-label>Start Date</mat-label>
         <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="MM/DD/YYYY">
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field>
-
       <!-- End Date Filter -->
-      <mat-form-field appearance="outline" class="w-full">
+      <mat-form-field appearance="fill" class="w-full">
         <mat-label>End Date</mat-label>
         <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="MM/DD/YYYY">
         <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
-
       <!-- Assigned User Filter -->
-      <mat-form-field appearance="outline" class="w-full">
+      <mat-form-field appearance="fill" class="w-full">
         <mat-label>Assigned User</mat-label>
         <input matInput formControlName="assignedUser" placeholder="Search by user name">
       </mat-form-field>
-
       <!-- Clear Filters Button - Only show when filters are active -->
-      <div *ngIf="hasActiveFilters" class="flex justify-end clear-filters-button">
+      <div *ngIf="hasActiveFilters" class="flex justify-end items-center h-full">
         <button 
           mat-stroked-button 
           color="warn" 
@@ -46,7 +41,6 @@
           Clear Filters
         </button>
       </div>
-
     </div>
   </form>
 </div> 
