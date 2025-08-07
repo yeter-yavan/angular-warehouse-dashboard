@@ -3,8 +3,7 @@ import { Job } from '../../models/job.model';
 
 @Component({
   selector: 'app-job-cards',
-  templateUrl: './job-cards.component.html',
-  styleUrls: ['./job-cards.component.css']
+  templateUrl: './job-cards.component.html'
 })
 export class JobCardsComponent {
   @Input() jobs: Job[] = [];
@@ -15,27 +14,48 @@ export class JobCardsComponent {
     this.jobSelected.emit(job);
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'Pending':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'In Progress':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'Completed':
-        return 'bg-green-100 text-green-800 border-green-200';
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'status-pending';
+      case 'in progress':
+        return 'status-in-progress';
+      case 'completed':
+        return 'status-completed';
+      case 'cancelled':
+        return 'status-cancelled';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-secondary-100 text-secondary-700';
+    }
+  }
+
+
+
+  getStatusIconClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'text-warning-600';
+      case 'in progress':
+        return 'text-primary-600';
+      case 'completed':
+        return 'text-success-600';
+      case 'cancelled':
+        return 'text-danger-600';
+      default:
+        return 'text-secondary-600';
     }
   }
 
   getStatusIcon(status: string): string {
-    switch (status) {
-      case 'Pending':
+    switch (status.toLowerCase()) {
+      case 'pending':
         return 'schedule';
-      case 'In Progress':
+      case 'in progress':
         return 'play_circle';
-      case 'Completed':
+      case 'completed':
         return 'check_circle';
+      case 'cancelled':
+        return 'cancel';
       default:
         return 'help';
     }

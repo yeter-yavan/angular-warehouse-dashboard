@@ -6,15 +6,17 @@ import { Job } from '../../models/job.model';
 
 @Component({
   selector: 'app-job-table',
-  templateUrl: './job-table.component.html',
-  styleUrls: ['./job-table.component.css']
+  templateUrl: './job-table.component.html'
 })
 export class JobTableComponent implements AfterViewInit, OnChanges {
   private _jobs: Job[] = [];
   @Input() set jobs(value: Job[]) {
     this._jobs = value || [];
     this.dataSource.data = this._jobs;
-    this.connectPaginator();
+    // Ensure paginator is connected after data is set
+    setTimeout(() => {
+      this.connectPaginator();
+    });
   }
   get jobs(): Job[] {
     return this._jobs;
@@ -56,16 +58,18 @@ export class JobTableComponent implements AfterViewInit, OnChanges {
     this.jobSelected.emit(job);
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'Pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'In Progress':
-        return 'bg-blue-100 text-blue-800';
-      case 'Completed':
-        return 'bg-green-100 text-green-800';
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'status-pending';
+      case 'in progress':
+        return 'status-in-progress';
+      case 'completed':
+        return 'status-completed';
+      case 'cancelled':
+        return 'status-cancelled';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-secondary-100 text-secondary-700';
     }
   }
 

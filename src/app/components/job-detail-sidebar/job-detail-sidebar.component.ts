@@ -4,8 +4,7 @@ import { Job, JobStatus } from '../../models/job.model';
 
 @Component({
   selector: 'app-job-detail-sidebar',
-  templateUrl: './job-detail-sidebar.component.html',
-  styleUrls: ['./job-detail-sidebar.component.css']
+  templateUrl: './job-detail-sidebar.component.html'
 })
 export class JobDetailSidebarComponent implements OnInit, OnChanges {
   @Input() job: Job | null = null;
@@ -67,16 +66,18 @@ export class JobDetailSidebarComponent implements OnInit, OnChanges {
     }
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'Pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'In Progress':
-        return 'bg-blue-100 text-blue-800';
-      case 'Completed':
-        return 'bg-green-100 text-green-800';
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'status-pending';
+      case 'in progress':
+        return 'status-in-progress';
+      case 'completed':
+        return 'status-completed';
+      case 'cancelled':
+        return 'status-cancelled';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-secondary-100 text-secondary-700';
     }
   }
 
@@ -91,16 +92,16 @@ export class JobDetailSidebarComponent implements OnInit, OnChanges {
     });
   }
 
-  getPriorityColor(priority?: string): string {
-    switch (priority) {
+  getPriorityClass(priority?: string): string {
+    switch (priority?.toLowerCase()) {
       case 'high':
-        return 'bg-red-100 text-red-800';
+        return 'bg-danger-100 text-danger-700';
       case 'medium':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-warning-100 text-warning-700';
       case 'low':
-        return 'bg-green-100 text-green-800';
+        return 'bg-success-100 text-success-700';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-secondary-100 text-secondary-700';
     }
   }
 } 

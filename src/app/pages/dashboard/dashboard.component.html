@@ -1,11 +1,16 @@
-<div class="h-screen bg-gray-50">
+<div class="h-screen bg-background-light">
   
-  <!-- Header -->
-  <mat-toolbar class="bg-white shadow-sm border-b border-gray-200">
+  <!-- Enhanced Header with Gradient -->
+  <mat-toolbar class="bg-gradient-to-r from-primary-600 to-primary-700 shadow-medium">
     <div class="flex items-center justify-between w-full px-6">
       <div class="flex items-center space-x-4">
-        <mat-icon class="text-blue-600 text-2xl">warehouse</mat-icon>
-        <h1 class="text-2xl font-bold text-gray-900">Warehouse Dashboard</h1>
+        <div class="bg-white/20 p-2 rounded-lg">
+          <mat-icon class="text-white text-2xl">warehouse</mat-icon>
+        </div>
+        <h1 class="text-2xl font-bold text-white">Warehouse Dashboard</h1>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="text-primary-100 text-sm">Welcome back!</span>
       </div>
     </div>
   </mat-toolbar>
@@ -17,10 +22,10 @@
     <mat-sidenav-content class="p-6">
       
       <!-- Filter Section -->
-      <mat-card class="mb-4">
+      <mat-card class="mb-6 fade-in">
         <mat-card-header>
-          <mat-card-title class="text-lg font-semibold text-gray-800">
-            <mat-icon>filter_list</mat-icon>
+          <mat-card-title class="text-lg font-semibold text-secondary-800 flex items-center">
+            <mat-icon class="text-primary-600 mr-2">filter_list</mat-icon>
             Filter Jobs
           </mat-card-title>
         </mat-card-header>
@@ -31,59 +36,70 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- Job List Controls - Above the job list -->
-      <div class="job-list-controls p-4 mb-4">
-        <div class="flex items-center justify-between">
-          <!-- Left side - View toggle and job count -->
-          <div class="flex items-center space-x-4">
-            <!-- View Toggle -->
-            <mat-button-toggle-group 
-              [value]="viewMode" 
-              (change)="viewMode = $event.value"
-              [disabled]="loading"
-              class="bg-gray-100">
-              <mat-button-toggle value="table">
-                <mat-icon class="mr-2">table_chart</mat-icon>
-                Table
-              </mat-button-toggle>
-              <mat-button-toggle value="cards">
-                <mat-icon class="mr-2">grid_view</mat-icon>
-                Cards
-              </mat-button-toggle>
-            </mat-button-toggle-group>          
-          </div>
-
-          <!-- Right side - Refresh button -->
-          <button 
-            mat-stroked-button 
-            (click)="refreshJobs()"
-            [disabled]="loading"
-            class="hover:bg-gray-50">
-            <mat-icon class="mr-2">refresh</mat-icon>
-            Refresh
-          </button>
-        </div>
-      </div>
-
-      <!-- Content Section -->
-      <mat-card>
+      <!-- Content Section with Integrated Controls -->
+      <mat-card class="fade-in">
         <mat-card-content class="p-0">
-          <!-- Table View -->
-          <div *ngIf="viewMode === 'table'">
-            <app-job-table 
-              [jobs]="jobs"
-              [loading]="loading"
-              (jobSelected)="onJobSelected($event)">
-            </app-job-table>
+          
+          <!-- Table Header with Integrated Controls -->
+          <div class="px-6 py-4 border-b border-secondary-200 bg-secondary-50/50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-4">
+                <h3 class="text-lg font-semibold text-secondary-800">Warehouse Jobs</h3>
+                <span class="text-sm text-secondary-600 bg-white px-3 py-1 rounded-full border border-secondary-200">
+                  {{ jobs.length }} jobs found
+                </span>
+              </div>
+              
+              <!-- Right side controls -->
+              <div class="flex items-center space-x-4">
+                <!-- View Toggle -->
+                <mat-button-toggle-group 
+                  [value]="viewMode" 
+                  (change)="viewMode = $event.value"
+                  [disabled]="loading"
+                  class="bg-white border border-secondary-200">
+                  <mat-button-toggle value="table" class="px-4 py-2">
+                    <mat-icon class="mr-2 text-sm">table_chart</mat-icon>
+                    Table
+                  </mat-button-toggle>
+                  <mat-button-toggle value="cards" class="px-4 py-2">
+                    <mat-icon class="mr-2 text-sm">grid_view</mat-icon>
+                    Cards
+                  </mat-button-toggle>
+                </mat-button-toggle-group>
+                
+                <!-- Refresh button -->
+                <button 
+                  mat-stroked-button 
+                  (click)="refreshJobs()"
+                  [disabled]="loading"
+                  class="hover:bg-primary-50 hover:border-primary-300 hover:text-primary-700 transition-colors duration-200">
+                  <mat-icon class="mr-2">refresh</mat-icon>
+                  Refresh
+                </button>
+              </div>
+            </div>
           </div>
 
-          <!-- Card View -->
-          <div *ngIf="viewMode === 'cards'">
-            <app-job-cards 
-              [jobs]="jobs"
-              [loading]="loading"
-              (jobSelected)="onJobSelected($event)">
-            </app-job-cards>
+          <!-- Content Views -->
+          <div class="p-0">
+            <!-- Table View -->
+            <div *ngIf="viewMode === 'table'">
+              <app-job-table 
+                [jobs]="jobs"
+                [loading]="loading"
+                (jobSelected)="onJobSelected($event)">
+              </app-job-table>
+            </div>
+
+            <!-- Card View -->
+            <div *ngIf="viewMode === 'cards'">
+              <app-job-cards 
+                [jobs]="jobs"
+                [loading]="loading"
+                (jobSelected)="onJobSelected($event)">
+              </app-job-cards>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -96,7 +112,7 @@
       mode="side" 
       position="end" 
       [opened]="sidebarOpen"
-      class="w-96 border-l border-gray-200">
+      class="w-96 border-l border-secondary-200">
       
       <app-job-detail-sidebar
         [job]="selectedJob"

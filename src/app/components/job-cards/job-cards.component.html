@@ -2,19 +2,13 @@
   
   <!-- Loading State -->
   <div *ngIf="loading" class="loading-spinner p-8">
-    <mat-progress-spinner diameter="40"></mat-progress-spinner>
-    <span class="ml-3 text-gray-600">Loading jobs...</span>
+    <mat-progress-spinner diameter="40" color="primary"></mat-progress-spinner>
+    <span class="ml-3 text-secondary-600">Loading jobs...</span>
   </div>
 
   <!-- Cards Content -->
   <div *ngIf="!loading">
     
-    <!-- Cards Header -->
-    <div class="px-6 py-4 border-b border-gray-200">
-      <h3 class="text-lg font-semibold text-gray-800">Warehouse Jobs</h3>
-      <p class="text-sm text-gray-600 mt-1">{{ jobs.length }} jobs found</p>
-    </div>
-
     <!-- Cards Grid -->
     <div class="p-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -23,21 +17,16 @@
         <div 
           *ngFor="let job of jobs"
           (click)="onCardClick(job)"
-          class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group">
+          class="bg-white border border-secondary-200 rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 cursor-pointer group fade-in">
           
           <!-- Card Header -->
-          <div class="p-4 border-b border-gray-100">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="text-lg font-semibold text-gray-900 font-mono">
+          <div class="p-5 border-b border-secondary-100">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-lg font-semibold text-secondary-900 font-mono">
                 {{ job.id }}
               </h4>
               <mat-icon 
-                [ngClass]="{
-                  'text-yellow-500': job.status === 'Pending',
-                  'text-blue-500': job.status === 'In Progress',
-                  'text-green-500': job.status === 'Completed',
-                  'text-gray-500': job.status !== 'Pending' && job.status !== 'In Progress' && job.status !== 'Completed'
-                }"
+                [ngClass]="getStatusIconClass(job.status)"
                 class="text-lg">
                 {{ getStatusIcon(job.status) }}
               </mat-icon>
@@ -45,41 +34,47 @@
             
             <!-- SKU -->
             <div class="flex items-center space-x-2">
-              <mat-icon class="text-gray-400 text-sm">inventory</mat-icon>
-              <span class="text-sm font-mono text-gray-600">{{ job.sku }}</span>
+              <mat-icon class="text-secondary-400 text-sm">inventory</mat-icon>
+              <span class="text-sm font-mono text-secondary-600">{{ job.sku }}</span>
             </div>
           </div>
 
           <!-- Card Body -->
-          <div class="p-4 space-y-3">
+          <div class="p-5 space-y-4">
             
             <!-- Status Badge -->
             <div class="flex items-center justify-between">
-              <span class="text-xs font-medium text-gray-500 uppercase tracking-wide">Status</span>
-              <span class="px-2 py-1 text-xs font-medium rounded-full border" [ngClass]="getStatusColor(job.status)">
+              <span class="text-xs font-medium text-secondary-500 uppercase tracking-wide">Status</span>
+              <span class="status-badge" [ngClass]="getStatusClass(job.status)">
                 {{ job.status }}
               </span>
             </div>
 
             <!-- Assigned User -->
             <div class="flex items-center justify-between">
-              <span class="text-xs font-medium text-gray-500 uppercase tracking-wide">Assigned To</span>
-              <span class="text-sm text-gray-900">{{ job.assignedUser || 'Unassigned' }}</span>
+              <span class="text-xs font-medium text-secondary-500 uppercase tracking-wide">Assigned To</span>
+              <div class="flex items-center justify-center">
+                <mat-icon class="text-secondary-400 text-xs">person</mat-icon>
+                <span class="text-sm text-secondary-900">{{ job.assignedUser || 'Unassigned' }}</span>
+              </div>
             </div>
 
             <!-- Created Date -->
             <div class="flex items-center justify-between">
-              <span class="text-xs font-medium text-gray-500 uppercase tracking-wide">Created</span>
-              <span class="text-sm text-gray-900">{{ formatDate(job.createdDate) }}</span>
+              <span class="text-xs font-medium text-secondary-500 uppercase tracking-wide">Created</span>
+              <div class="flex items-center">
+                <mat-icon class="text-secondary-400 mr-1 text-sm">schedule</mat-icon>
+                <span class="text-sm text-secondary-900">{{ formatDate(job.createdDate) }}</span>
+              </div>
             </div>
 
           </div>
 
           <!-- Card Footer -->
-          <div class="px-4 py-3 bg-gray-50 border-t border-gray-100 rounded-b-lg">
+          <div class="px-5 py-4 bg-secondary-50/50 border-t border-secondary-100 rounded-b-xl">
             <div class="flex items-center justify-between">
-              <span class="text-xs text-gray-500">Click to view details</span>
-              <mat-icon class="text-gray-400 group-hover:text-blue-500 transition-colors duration-200">
+              <span class="text-xs text-secondary-500">Click to view details</span>
+              <mat-icon class="text-secondary-400 group-hover:text-primary-600 transition-colors duration-200">
                 arrow_forward
               </mat-icon>
             </div>
@@ -93,10 +88,12 @@
   </div>
 
   <!-- Empty State -->
-  <div *ngIf="!loading && jobs.length === 0" class="text-center py-12">
-    <mat-icon class="text-gray-400 text-6xl mb-4">inbox</mat-icon>
-    <h3 class="text-lg font-medium text-gray-900 mb-2">No jobs found</h3>
-    <p class="text-gray-600">Try adjusting your filters or check back later.</p>
+  <div *ngIf="!loading && jobs.length === 0" class="text-center py-16">
+    <div class="bg-secondary-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+      <mat-icon class="text-secondary-400 text-3xl">inbox</mat-icon>
+    </div>
+    <h3 class="text-lg font-semibold text-secondary-800 mb-2">No jobs found</h3>
+    <p class="text-secondary-600">Try adjusting your filters or check back later.</p>
   </div>
 
 </div> 

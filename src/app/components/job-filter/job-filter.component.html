@@ -1,46 +1,55 @@
-<div class="p-4">
-  <form [formGroup]="filterForm">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-center justify-center">
+<div class="p-6">
+  <form [formGroup]="filterForm" class="space-y-6">
+    <!-- Filter Fields Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Status Filter -->
       <mat-form-field appearance="fill" class="w-full">
-        <mat-label>Job Status</mat-label>
-        <mat-select formControlName="status">
+        <mat-label class="text-secondary-700">Job Status</mat-label>
+        <mat-select formControlName="status" class="text-secondary-800">
           <mat-option value="">All Statuses</mat-option>
           <mat-option *ngFor="let status of jobStatuses" [value]="status">
             {{ status }}
           </mat-option>
         </mat-select>
+        <mat-icon matPrefix class="text-secondary-400 mr-2">work</mat-icon>
       </mat-form-field>
+
       <!-- Start Date Filter -->
       <mat-form-field appearance="fill" class="w-full">
-        <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="MM/DD/YYYY">
-        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-label class="text-secondary-700">Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="MM/DD/YYYY" class="text-secondary-800">
+        <mat-datepicker-toggle matSuffix [for]="startPicker" class="text-secondary-400"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
+        <mat-icon matPrefix class="text-secondary-400 mr-2">calendar_today</mat-icon>
       </mat-form-field>
+
       <!-- End Date Filter -->
       <mat-form-field appearance="fill" class="w-full">
-        <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="MM/DD/YYYY">
-        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-label class="text-secondary-700">End Date</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="MM/DD/YYYY" class="text-secondary-800">
+        <mat-datepicker-toggle matSuffix [for]="endPicker" class="text-secondary-400"></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
+        <mat-icon matPrefix class="text-secondary-400 mr-2">event</mat-icon>
       </mat-form-field>
+
       <!-- Assigned User Filter -->
       <mat-form-field appearance="fill" class="w-full">
-        <mat-label>Assigned User</mat-label>
-        <input matInput formControlName="assignedUser" placeholder="Search by user name">
+        <mat-label class="text-secondary-700">Assigned User</mat-label>
+        <input matInput formControlName="assignedUser" placeholder="Search by user name" class="text-secondary-800">
+        <mat-icon matPrefix class="text-secondary-400 mr-2">person</mat-icon>
       </mat-form-field>
-      <!-- Clear Filters Button - Only show when filters are active -->
-      <div *ngIf="hasActiveFilters" class="flex justify-end items-center h-full">
-        <button 
-          mat-stroked-button 
-          color="warn" 
-          (click)="clearFilters()"
-          class="hover:bg-red-50">
-          <mat-icon class="mr-2">clear</mat-icon>
-          Clear Filters
-        </button>
-      </div>
+    </div>
+
+    <!-- Clear Filters Button - Centered and Enhanced -->
+    <div *ngIf="hasActiveFilters" class="flex justify-center">
+      <button 
+        mat-stroked-button 
+        color="warn" 
+        (click)="clearFilters()"
+        class="btn-danger border-danger-300 hover:bg-danger-50 hover:border-danger-400 transition-all duration-200 px-6 py-2">
+        <mat-icon class="mr-2">clear_all</mat-icon>
+        Clear All Filters
+      </button>
     </div>
   </form>
 </div> 

@@ -5,8 +5,7 @@ import { JobStatus, JobFilter } from '../../models/job.model';
 
 @Component({
   selector: 'app-job-filter',
-  templateUrl: './job-filter.component.html',
-  styleUrls: ['./job-filter.component.css']
+  templateUrl: './job-filter.component.html'
 })
 export class JobFilterComponent implements OnInit, OnDestroy {
   @Output() filterChange = new EventEmitter<JobFilter>();

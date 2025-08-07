@@ -5,12 +5,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Material Icons */
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 /* Custom styles */
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+  height: 100%; 
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body { 
+  margin: 0; 
+  font-family: 'Inter', "Helvetica Neue", sans-serif;
+  background-color: #f8fafc;
+}
+
+/* CSS Variables for consistent theming */
+:root {
+  --primary-color: #3b82f6;
+  --primary-light: #eff6ff;
+  --secondary-color: #64748b;
+  --success-color: #22c55e;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --border-color: #e2e8f0;
+  --background-light: #f8fafc;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+}
 
 /* Custom utility classes */
 .mat-mdc-drawer-container {
@@ -21,12 +45,53 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+/* Enhanced Material Design overrides */
+.mat-mdc-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.mat-mdc-button-toggle-group {
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.mat-mdc-button-toggle {
+  border: none !important;
+}
+
+.mat-mdc-form-field {
+  font-family: 'Inter', sans-serif !important;
+}
+
 /* Loading spinner styles */
 .loading-spinner {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 200px;
+}
+
+/* Status badge styles */
+.status-badge {
+  @apply px-3 py-1 text-xs font-medium rounded-full;
+}
+
+.status-pending {
+  @apply bg-warning-100 text-warning-700;
+}
+
+.status-in-progress {
+  @apply bg-primary-100 text-primary-700;
+}
+
+.status-completed {
+  @apply bg-success-100 text-success-700;
+}
+
+.status-cancelled {
+  @apply bg-danger-100 text-danger-700;
 }
 
 /* Material Icons fallback */
@@ -44,4 +109,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Enhanced button styles */
+.btn-primary {
+  @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-secondary-100 hover:bg-secondary-200 text-secondary-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-danger {
+  @apply bg-danger-600 hover:bg-danger-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
 }
