@@ -19,4 +19,24 @@
 
 .status-completed {
   color: #10b981;
+}
+
+/* Clear Filters button styling */
+.clear-filters-button {
+  height: 56px; /* Match the height of mat-form-field */
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive adjustments for the grid */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .clear-filters-button {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
 } 

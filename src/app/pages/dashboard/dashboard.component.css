@@ -1,21 +1,77 @@
 /* Dashboard specific styles */
-.mat-drawer-container {
+.mat-sidenav-container {
   height: 100vh;
 }
 
-.mat-drawer {
+.mat-sidenav {
   border-left: 1px solid #e5e7eb;
 }
 
 /* Header styles */
-header {
+mat-toolbar {
   z-index: 10;
+}
+
+/* Button toggle group styling */
+.mat-button-toggle-group {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mat-button-toggle {
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.mat-button-toggle-checked {
+  background-color: white !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Job List Controls styling */
+.job-list-controls {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+}
+
+/* Card styling */
+mat-card {
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+mat-card-header {
+  padding: 16px 20px 0 20px;
+}
+
+mat-card-content {
+  padding: 0 20px 20px 20px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .mat-drawer {
+  .mat-sidenav {
     width: 100% !important;
+  }
+  
+  mat-toolbar .flex {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .mat-button-toggle-group {
+    width: 100%;
+  }
+  
+  .job-list-controls .flex {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .job-list-controls .flex > div {
+    width: 100%;
   }
 }
 

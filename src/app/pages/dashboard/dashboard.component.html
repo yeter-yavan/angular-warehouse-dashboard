@@ -1,39 +1,59 @@
 <div class="h-screen bg-gray-50">
   
   <!-- Header -->
-  <header class="bg-white shadow-sm border-b border-gray-200">
-    <div class="px-6 py-4">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-          <mat-icon class="text-blue-600 text-2xl">warehouse</mat-icon>
-          <h1 class="text-2xl font-bold text-gray-900">Warehouse Dashboard</h1>
-        </div>
-        
-        <div class="flex items-center space-x-3">
-          <!-- View Toggle -->
-          <div class="flex items-center bg-gray-100 rounded-lg p-1">
-            <button 
-              mat-stroked-button 
-              [class.bg-white]="viewMode === 'table'"
-              [class.shadow-sm]="viewMode === 'table'"
-              (click)="viewMode = 'table'"
-              class="rounded-md transition-all duration-200"
-              [disabled]="loading">
-              <mat-icon class="mr-2">table_chart</mat-icon>
-              Table
-            </button>
-            <button 
-              mat-stroked-button 
-              [class.bg-white]="viewMode === 'cards'"
-              [class.shadow-sm]="viewMode === 'cards'"
-              (click)="viewMode = 'cards'"
-              class="rounded-md transition-all duration-200"
-              [disabled]="loading">
-              <mat-icon class="mr-2">grid_view</mat-icon>
-              Cards
-            </button>
+  <mat-toolbar class="bg-white shadow-sm border-b border-gray-200">
+    <div class="flex items-center justify-between w-full px-6">
+      <div class="flex items-center space-x-4">
+        <mat-icon class="text-blue-600 text-2xl">warehouse</mat-icon>
+        <h1 class="text-2xl font-bold text-gray-900">Warehouse Dashboard</h1>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- Main Content with Sidenav -->
+  <mat-sidenav-container class="h-full">
+    
+    <!-- Main Content Area -->
+    <mat-sidenav-content class="p-6">
+      
+      <!-- Filter Section -->
+      <mat-card class="mb-4">
+        <mat-card-header>
+          <mat-card-title class="text-lg font-semibold text-gray-800">
+            <mat-icon>filter_list</mat-icon>
+            Filter Jobs
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-job-filter 
+            (filterChange)="onFilterChange($event)">
+          </app-job-filter>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Job List Controls - Above the job list -->
+      <div class="job-list-controls p-4 mb-4">
+        <div class="flex items-center justify-between">
+          <!-- Left side - View toggle and job count -->
+          <div class="flex items-center space-x-4">
+            <!-- View Toggle -->
+            <mat-button-toggle-group 
+              [value]="viewMode" 
+              (change)="viewMode = $event.value"
+              [disabled]="loading"
+              class="bg-gray-100">
+              <mat-button-toggle value="table">
+                <mat-icon class="mr-2">table_chart</mat-icon>
+                Table
+              </mat-button-toggle>
+              <mat-button-toggle value="cards">
+                <mat-icon class="mr-2">grid_view</mat-icon>
+                Cards
+              </mat-button-toggle>
+            </mat-button-toggle-group>          
           </div>
 
+          <!-- Right side - Refresh button -->
           <button 
             mat-stroked-button 
             (click)="refreshJobs()"
@@ -42,50 +62,37 @@
             <mat-icon class="mr-2">refresh</mat-icon>
             Refresh
           </button>
-          
-          <div class="flex items-center space-x-2 text-sm text-gray-600">
-            <mat-icon class="text-green-500">circle</mat-icon>
-            <span>{{ jobs.length }} Jobs</span>
-          </div>
         </div>
       </div>
-    </div>
-  </header>
 
-  <!-- Main Content with Drawer -->
-  <mat-drawer-container class="h-full">
-    
-    <!-- Main Content Area -->
-    <mat-drawer-content class="p-6">
-      
-      <!-- Filter Section -->
-      <app-job-filter 
-        (filterChange)="onFilterChange($event)">
-      </app-job-filter>
+      <!-- Content Section -->
+      <mat-card>
+        <mat-card-content class="p-0">
+          <!-- Table View -->
+          <div *ngIf="viewMode === 'table'">
+            <app-job-table 
+              [jobs]="jobs"
+              [loading]="loading"
+              (jobSelected)="onJobSelected($event)">
+            </app-job-table>
+          </div>
 
-      <!-- Table View -->
-      <div *ngIf="viewMode === 'table'">
-        <app-job-table 
-          [jobs]="jobs"
-          [loading]="loading"
-          (jobSelected)="onJobSelected($event)">
-        </app-job-table>
-      </div>
+          <!-- Card View -->
+          <div *ngIf="viewMode === 'cards'">
+            <app-job-cards 
+              [jobs]="jobs"
+              [loading]="loading"
+              (jobSelected)="onJobSelected($event)">
+            </app-job-cards>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
-      <!-- Card View -->
-      <div *ngIf="viewMode === 'cards'">
-        <app-job-cards 
-          [jobs]="jobs"
-          [loading]="loading"
-          (jobSelected)="onJobSelected($event)">
-        </app-job-cards>
-      </div>
+    </mat-sidenav-content>
 
-    </mat-drawer-content>
-
-    <!-- Sidebar Drawer -->
-    <mat-drawer 
-      #drawer 
+    <!-- Sidebar Sidenav -->
+    <mat-sidenav 
+      #sidenav 
       mode="side" 
       position="end" 
       [opened]="sidebarOpen"
@@ -98,8 +105,8 @@
         (statusUpdate)="onStatusUpdate($event)">
       </app-job-detail-sidebar>
       
-    </mat-drawer>
+    </mat-sidenav>
 
-  </mat-drawer-container>
+  </mat-sidenav-container>
 
 </div> 

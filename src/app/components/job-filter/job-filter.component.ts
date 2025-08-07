@@ -12,6 +12,7 @@ export class JobFilterComponent {
 
   filterForm: FormGroup;
   jobStatuses: JobStatus[] = ['Pending', 'In Progress', 'Completed'];
+  hasActiveFilters = false;
 
   constructor(private fb: FormBuilder) {
     this.filterForm = this.fb.group({
@@ -29,11 +30,16 @@ export class JobFilterComponent {
         endDate: value.endDate ? new Date(value.endDate) : undefined,
         assignedUser: value.assignedUser || undefined
       };
+      
+      // Check if any filters are active
+      this.hasActiveFilters = !!(filter.status || filter.startDate || filter.endDate || filter.assignedUser);
+      
       this.filterChange.emit(filter);
     });
   }
 
   clearFilters(): void {
     this.filterForm.reset();
+    this.hasActiveFilters = false;
   }
 } 
