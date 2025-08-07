@@ -1,16 +1,19 @@
 <div class="h-screen bg-background-light">
   
-  <!-- Enhanced Header with Gradient -->
-  <mat-toolbar class="bg-gradient-to-r from-primary-600 to-primary-700 shadow-medium">
+  <!-- Enhanced Header with Gradient + Header-only dark mode toggle -->
+  <mat-toolbar [ngClass]="isDarkHeader ? 'bg-gradient-to-r from-secondary-900 to-secondary-800 shadow-medium' : 'bg-gradient-to-r from-primary-600 to-primary-700 shadow-medium'">
     <div class="flex items-center justify-between w-full px-6">
       <div class="flex items-center space-x-4">
-        <div class="bg-white/20 p-2 rounded-lg">
+        <div class="p-2 rounded-lg" [ngClass]="isDarkHeader ? 'bg-white/10' : 'bg-white/20'">
           <mat-icon class="text-white text-2xl">warehouse</mat-icon>
         </div>
         <h1 class="text-2xl font-bold text-white">Warehouse Dashboard</h1>
       </div>
-      <div class="flex items-center space-x-4">
-        <span class="text-primary-100 text-sm">Welcome back!</span>
+      <div class="flex items-center space-x-3">
+        <button mat-stroked-button (click)="toggleHeaderTheme()" class="!border-white/30 !text-white hover:!bg-white/10">
+          <mat-icon class="mr-2">{{ isDarkHeader ? 'light_mode' : 'dark_mode' }}</mat-icon>
+          {{ isDarkHeader ? 'Light' : 'Dark' }} header
+        </button>
       </div>
     </div>
   </mat-toolbar>
@@ -58,11 +61,11 @@
                   (change)="viewMode = $event.value"
                   [disabled]="loading"
                   class="bg-white border border-secondary-200">
-                  <mat-button-toggle value="table" class="px-4 py-2">
+                  <mat-button-toggle value="table">
                     <mat-icon class="mr-2 text-sm">table_chart</mat-icon>
                     Table
                   </mat-button-toggle>
-                  <mat-button-toggle value="cards" class="px-4 py-2">
+                  <mat-button-toggle value="cards">
                     <mat-icon class="mr-2 text-sm">grid_view</mat-icon>
                     Cards
                   </mat-button-toggle>
@@ -73,7 +76,7 @@
                   mat-stroked-button 
                   (click)="refreshJobs()"
                   [disabled]="loading"
-                  class="hover:bg-primary-50 hover:border-primary-300 hover:text-primary-700 transition-colors duration-200">
+                  class="hover:bg-primary-50 hover:border-primary-300 hover:text-primary-700 transition-colors duration-200 h-12 px-4 flex items-center rounded-lg">
                   <mat-icon class="mr-2">refresh</mat-icon>
                   Refresh
                 </button>

@@ -16,12 +16,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   sidebarOpen = false;
   currentFilter: JobFilter = {};
   viewMode: ViewMode = 'table';
+  // Header theme state
+  isDarkHeader = false;
 
   private destroy$ = new Subject<void>();
 
   constructor(private jobService: JobService) {}
 
   ngOnInit(): void {
+    // Restore header theme preference
+    const savedHeaderTheme = localStorage.getItem('isDarkHeader');
+    if (savedHeaderTheme !== null) {
+      this.isDarkHeader = savedHeaderTheme === 'true';
+    }
+
     // Subscribe to jobs and loading state
     combineLatest([
       this.jobService.jobs$,
@@ -97,5 +105,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   toggleViewMode(): void {
     this.viewMode = this.viewMode === 'table' ? 'cards' : 'table';
+  }
+
+  // Toggle header dark mode and persist preference
+  toggleHeaderTheme(): void {
+    this.isDarkHeader = !this.isDarkHeader;
+    localStorage.setItem('isDarkHeader', String(this.isDarkHeader));
   }
 } 
