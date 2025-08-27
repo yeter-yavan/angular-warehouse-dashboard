@@ -14,7 +14,7 @@ An enterprise-grade Angular 17 warehouse management dashboard built with Angular
 
 ## 🛠️ Technology Stack
 
-- **Angular 14**: Core framework
+- **Angular 17**: Core framework
 - **Angular Material**: UI component library
 - **Tailwind CSS**: Utility-first CSS framework
 - **RxJS**: Reactive programming and state management
