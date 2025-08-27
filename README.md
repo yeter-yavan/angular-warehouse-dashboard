@@ -1,6 +1,6 @@
-# Warehouse Dashboard - Angular 14 Application
+# Warehouse Dashboard - Angular 17 Application
 
-An enterprise-grade Angular 14 warehouse management dashboard built with Angular Material and Tailwind CSS. This application demonstrates clean architecture principles, RxJS state management, and modern UI/UX practices.
+An enterprise-grade Angular 17 warehouse management dashboard built with Angular Material and Tailwind CSS. This application demonstrates clean architecture principles, RxJS state management, and modern UI/UX practices.
 
 ## 🚀 Features
 
@@ -195,5 +195,3 @@ This project is licensed under the MIT License.
 
 
 ---
-
-**Built with ❤️ using Angular 14, Angular Material, and Tailwind CSS**
